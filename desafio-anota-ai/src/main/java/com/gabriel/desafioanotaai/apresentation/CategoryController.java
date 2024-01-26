@@ -35,5 +35,10 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponse> updateCategory(@PathParam("id") String id, @RequestBody CategoryDTO categoryDTO){
+        CategoryDTO categoryUpdate = _categoryService.updateCategory(id, categoryDTO);
+        CategoryResponse categoryResponse= new CategoryResponse(categoryUpdate);
+        return ResponseEntity.ok().body(categoryResponse);
+    }
 }
