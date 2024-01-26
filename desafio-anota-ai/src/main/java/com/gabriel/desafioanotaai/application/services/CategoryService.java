@@ -7,6 +7,9 @@ import com.gabriel.desafioanotaai.domain.repository.ICategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CategoryService implements ICategoryService {
 
     private final ICategoryRepository _categoryRepository;
@@ -23,5 +26,13 @@ public class CategoryService implements ICategoryService {
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         Category category = _modelMapper.map(categoryDTO, Category.class);
         return _modelMapper.map(_categoryRepository.save(category), CategoryDTO.class);
+    }
+
+    @Override
+    public List<CategoryDTO> getAll() {
+        List<Category> resultList = _categoryRepository.findAll();
+        return resultList.stream()
+                .map(category -> _modelMapper.map(category, CategoryDTO.class))
+                .collect(Collectors.toList());
     }
 }
