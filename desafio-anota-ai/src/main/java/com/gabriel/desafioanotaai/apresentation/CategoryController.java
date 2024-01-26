@@ -4,12 +4,13 @@ import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
 import com.gabriel.desafioanotaai.application.interfaces.ICategoryService;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.model.category.Response.CategoryResponse;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/category")
@@ -27,4 +28,12 @@ public class CategoryController {
         CategoryResponse categoryResponse = new CategoryResponse(newCategoryDTO);
         return new ResponseEntity<>(categoryResponse, HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<List<CategoryDTO>> getAll(){
+        List<CategoryDTO> categories = _categoryService.getAll();
+        return ResponseEntity.ok(categories);
+    }
+
+
 }
