@@ -35,4 +35,18 @@ public class CategoryService implements ICategoryService {
                 .map(category -> _modelMapper.map(category, CategoryDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CategoryDTO updateCategory(String id, CategoryDTO categoryDTO) {
+        Category category = _categoryRepository.findById(id).orElseThrow();
+        if (!categoryDTO.getTitle().isEmpty()){
+            category.setTitle(categoryDTO.getTitle());
+        }
+        if (!categoryDTO.getDescription().isEmpty()){
+            category.setDescription(categoryDTO.getDescription());
+        }
+        return _modelMapper.map(_categoryRepository.save(category), CategoryDTO.class);
+    }
+
+
 }
