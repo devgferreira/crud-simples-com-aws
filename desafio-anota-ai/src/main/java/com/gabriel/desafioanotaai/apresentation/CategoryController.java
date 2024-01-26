@@ -41,4 +41,10 @@ public class CategoryController {
         CategoryResponse categoryResponse= new CategoryResponse(categoryUpdate);
         return ResponseEntity.ok().body(categoryResponse);
     }
+
+    @DeleteMapping("/id")
+    public ResponseEntity<String> deleteCategory(@PathParam("id") String id){
+        _categoryService.deleteCategory(id);
+        return ResponseEntity.ok().body("Category deletada!!");
+    }
 }
