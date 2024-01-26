@@ -9,4 +9,6 @@ public interface ICategoryService {
      List<CategoryDTO> getAll();
      CategoryDTO updateCategory(String id, CategoryDTO categoryDTO);
 
+     void deleteCategory(String id);
+
 }
