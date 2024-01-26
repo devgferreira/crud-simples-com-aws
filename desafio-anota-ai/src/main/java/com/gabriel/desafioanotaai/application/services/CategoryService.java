@@ -48,5 +48,11 @@ public class CategoryService implements ICategoryService {
         return _modelMapper.map(_categoryRepository.save(category), CategoryDTO.class);
     }
 
+    @Override
+    public void deleteCategory(String id) {
+        Category category = _categoryRepository.findById(id).orElseThrow();
+        _categoryRepository.deleteById(id);
+    }
+
 
 }
