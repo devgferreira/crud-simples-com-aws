@@ -5,6 +5,7 @@ import com.gabriel.desafioanotaai.application.interfaces.ICategoryService;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.model.category.Response.CategoryResponse;
 import jakarta.websocket.server.PathParam;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ public class CategoryController {
 
     private final ICategoryService _categoryService;
 
+    @Autowired
     public CategoryController(ICategoryService categoryService) {
         _categoryService = categoryService;
     }
