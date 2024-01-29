@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +24,11 @@ public class CategoryService implements ICategoryService {
         _modelMapper = modelMapper;
     }
 
+
+    @Override
+    public Optional<CategoryDTO> getById(String id) {
+        return Optional.ofNullable(_modelMapper.map(_categoryRepository.findById(id), CategoryDTO.class));
+    }
 
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
