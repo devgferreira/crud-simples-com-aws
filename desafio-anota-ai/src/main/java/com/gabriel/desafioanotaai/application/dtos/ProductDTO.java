@@ -15,4 +15,8 @@ public class ProductDTO {
         private Integer price;
         private Category category;
 
+
+        public void setCategory(CategoryDTO categoryDTO) {
+
+        }
 }

@@ -1,5 +1,6 @@
 package com.gabriel.desafioanotaai.domain.model.product;
 
+import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,8 @@ public class Product {
     private String ownerId;
     private Integer price;
     private Category category;
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

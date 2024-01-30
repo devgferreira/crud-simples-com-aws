@@ -40,7 +40,19 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductDTO updateProduct(String id, ProductDTO productDTO) {
-        return null;
+        Product product = _productRepository.findById(id).orElseThrow();
+        _categoryService.getById(productDTO.getCategory().getId()).ifPresent(productDTO:: setCategory);
+
+        if(!productDTO.getTitle().isEmpty()){
+            product.setTitle(productDTO.getTitle());
+        }
+        if(!productDTO.getDescription().isEmpty()){
+            product.setDescription(productDTO.getTitle());
+        }
+        if(productDTO.getPrice() == null){
+            product.setPrice(productDTO.getPrice());
+        }
+        return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
     }
 
     @Override
