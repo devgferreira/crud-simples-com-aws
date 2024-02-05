@@ -31,4 +31,11 @@ public class ProductController {
         return new ResponseEntity<>(productResponse, HttpStatus.CREATED);
     }
 
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> getAll(){
+        List<ProductDTO> productDTOS = _productService.getAll();
+        return ResponseEntity.ok(productDTOS);
+    }
+
+
 }
