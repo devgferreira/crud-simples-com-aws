@@ -28,34 +28,32 @@ public class ProductService implements IProductService {
     }
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
-        CategoryDTO categoryDTO = _categoryService.getById(productDTO.getCategoryDTO().getId()).orElseThrow();
-        Product product = _modelMapper.map(productDTO, Product.class);
-        product.setCategory(_modelMapper.map(categoryDTO, Category.class));
+        Category category = _categoryService.getById(productDTO.getCategoryId()).orElseThrow();
+        Product product = new Product(productDTO);
+        product.setCategory(category);
         return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
     }
 
     @Override
     public ProductDTO updateProduct(String id, ProductDTO productDTO) {
         Product product = _productRepository.findById(id).orElseThrow();
-        _categoryService.getById(productDTO.getCategoryDTO().getId()).ifPresent(productDTO:: setCategoryDTO);
+         _categoryService.getById(productDTO.getCategoryId()).ifPresent(product:: setCategory);
 
         if(!productDTO.getTitle().isEmpty()){
             product.setTitle(productDTO.getTitle());
         }
         if(!productDTO.getDescription().isEmpty()){
-            product.setDescription(productDTO.getTitle());
+            product.setDescription(productDTO.getDescription());
         }
-        if(productDTO.getPrice() == null){
+        if(!(productDTO.getPrice() == null)){
             product.setPrice(productDTO.getPrice());
         }
         return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
     }
     @Override
-    public List<ProductDTO> getAll() {
+    public List<Product> getAll() {
         List<Product> resultList = _productRepository.findAll();
-        return resultList.stream()
-                .map(product -> _modelMapper.map(product, ProductDTO.class))
-                .collect(Collectors.toList());
+        return resultList;
     }
 
     @Override
