@@ -44,5 +44,9 @@ public class ProductController {
         return ResponseEntity.ok().body(productResponse);
     }
 
-
+    @DeleteMapping("/id")
+    public ResponseEntity<String> deleteProduct(@PathParam("id") String id){
+        _productService.deleteProduct(id);
+        return ResponseEntity.ok().body("Product deletada!!");
+    }
 }
