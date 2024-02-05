@@ -13,10 +13,5 @@ public class ProductDTO {
         private String description;
         private String ownerId;
         private Integer price;
-        private Category category;
-
-
-        public void setCategory(CategoryDTO categoryDTO) {
-
-        }
+        private CategoryDTO categoryDTO;
 }

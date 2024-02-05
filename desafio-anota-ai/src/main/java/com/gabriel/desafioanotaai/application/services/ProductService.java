@@ -27,7 +27,7 @@ public class ProductService implements IProductService {
     }
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
-        CategoryDTO categoryDTO = _categoryService.getById(productDTO.getCategory().getId()).orElseThrow();
+        CategoryDTO categoryDTO = _categoryService.getById(productDTO.getCategoryDTO().getId()).orElseThrow();
         Product product = _modelMapper.map(productDTO, Product.class);
         product.setCategory(_modelMapper.map(categoryDTO, Category.class));
         return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
@@ -41,7 +41,7 @@ public class ProductService implements IProductService {
     @Override
     public ProductDTO updateProduct(String id, ProductDTO productDTO) {
         Product product = _productRepository.findById(id).orElseThrow();
-        _categoryService.getById(productDTO.getCategory().getId()).ifPresent(productDTO:: setCategory);
+        _categoryService.getById(productDTO.getCategoryDTO().getId()).ifPresent(productDTO:: setCategoryDTO);
 
         if(!productDTO.getTitle().isEmpty()){
             product.setTitle(productDTO.getTitle());
