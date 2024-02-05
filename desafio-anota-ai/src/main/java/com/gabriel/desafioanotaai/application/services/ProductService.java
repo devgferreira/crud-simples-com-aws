@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService implements IProductService {
@@ -34,11 +35,6 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<ProductDTO> getAll() {
-        return null;
-    }
-
-    @Override
     public ProductDTO updateProduct(String id, ProductDTO productDTO) {
         Product product = _productRepository.findById(id).orElseThrow();
         _categoryService.getById(productDTO.getCategoryDTO().getId()).ifPresent(productDTO:: setCategoryDTO);
@@ -53,6 +49,13 @@ public class ProductService implements IProductService {
             product.setPrice(productDTO.getPrice());
         }
         return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
+    }
+    @Override
+    public List<ProductDTO> getAll() {
+        List<Product> resultList = _productRepository.findAll();
+        return resultList.stream()
+                .map(product -> _modelMapper.map(product, ProductDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override
