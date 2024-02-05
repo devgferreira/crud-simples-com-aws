@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/product")
+@RequestMapping("api/products")
 public class ProductController {
 
     private final IProductService _productService;
@@ -38,14 +38,14 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathParam("id") String id, @RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable("id") String id, @RequestBody ProductDTO productDTO){
         ProductDTO newProductDTO = _productService.updateProduct(id, productDTO);
         ProductResponse productResponse= new ProductResponse(newProductDTO);
         return ResponseEntity.ok().body(productResponse);
     }
 
-    @DeleteMapping("/id")
-    public ResponseEntity<String> deleteProduct(@PathParam("id") String id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") String id){
         _productService.deleteProduct(id);
         return ResponseEntity.ok().body("Product deletada!!");
     }
