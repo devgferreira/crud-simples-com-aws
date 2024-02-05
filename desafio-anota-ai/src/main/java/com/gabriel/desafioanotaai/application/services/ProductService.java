@@ -37,8 +37,9 @@ public class ProductService implements IProductService {
     @Override
     public ProductDTO updateProduct(String id, ProductDTO productDTO) {
         Product product = _productRepository.findById(id).orElseThrow();
-         _categoryService.getById(productDTO.getCategoryId()).ifPresent(product:: setCategory);
-
+        if(productDTO.getCategoryId() != null){
+             _categoryService.getById(productDTO.getCategoryId()).ifPresent(product:: setCategory);
+        }
         if(!productDTO.getTitle().isEmpty()){
             product.setTitle(productDTO.getTitle());
         }
