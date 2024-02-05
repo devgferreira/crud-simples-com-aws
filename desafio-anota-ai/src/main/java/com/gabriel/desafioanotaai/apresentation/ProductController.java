@@ -4,6 +4,7 @@ import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
 import com.gabriel.desafioanotaai.application.dtos.ProductDTO;
 import com.gabriel.desafioanotaai.application.interfaces.IProductService;
 import com.gabriel.desafioanotaai.domain.model.category.Response.CategoryResponse;
+import com.gabriel.desafioanotaai.domain.model.product.Product;
 import com.gabriel.desafioanotaai.domain.model.product.response.ProductResponse;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> getAll(){
-        List<ProductDTO> productDTOS = _productService.getAll();
-        return ResponseEntity.ok(productDTOS);
+    public ResponseEntity<List<Product>> getAll(){
+        List<Product> products = _productService.getAll();
+        return ResponseEntity.ok(products);
     }
 
     @PutMapping("/{id}")
