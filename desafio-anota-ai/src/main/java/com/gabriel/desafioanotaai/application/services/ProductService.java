@@ -60,6 +60,10 @@ public class ProductService implements IProductService {
 
     @Override
     public void deleteProduct(String id) {
+        Product product = _productRepository.findById(id).orElseThrow();
+
+
+        _productRepository.delete(product);
 
     }
 }
