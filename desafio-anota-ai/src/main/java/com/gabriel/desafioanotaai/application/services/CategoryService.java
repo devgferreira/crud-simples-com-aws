@@ -26,8 +26,8 @@ public class CategoryService implements ICategoryService {
 
 
     @Override
-    public Optional<CategoryDTO> getById(String id) {
-        return Optional.ofNullable(_modelMapper.map(_categoryRepository.findById(id), CategoryDTO.class));
+    public Optional<Category> getById(String id) {
+        return _categoryRepository.findById(id);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class CategoryService implements ICategoryService {
     @Override
     public void deleteCategory(String id) {
         Category category = _categoryRepository.findById(id).orElseThrow();
-        _categoryRepository.deleteById(id);
+        _categoryRepository.delete(category);
     }
 
 
