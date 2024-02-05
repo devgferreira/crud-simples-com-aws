@@ -1,12 +1,11 @@
 package com.gabriel.desafioanotaai.domain.model.product;
 
-import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
+import com.gabriel.desafioanotaai.application.dtos.ProductDTO;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.aggregation.StringOperators;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
@@ -22,7 +21,10 @@ public class Product {
     private Integer price;
     private Category category;
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public Product(ProductDTO productDTO){
+        title = productDTO.getTitle();
+        description = productDTO.getDescription();
+        ownerId = productDTO.getOwnerId();
+        price = productDTO.getPrice();
     }
 }
