@@ -37,5 +37,12 @@ public class ProductController {
         return ResponseEntity.ok(productDTOS);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> updateProduct(@PathParam("id") String id, @RequestBody ProductDTO productDTO){
+        ProductDTO newProductDTO = _productService.updateProduct(id, productDTO);
+        ProductResponse productResponse= new ProductResponse(newProductDTO);
+        return ResponseEntity.ok().body(productResponse);
+    }
+
 
 }
