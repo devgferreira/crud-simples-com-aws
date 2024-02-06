@@ -66,7 +66,10 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void deleteCategory(String id) {
-        Category category = _categoryRepository.findById(id).orElseThrow();
+        Category category = _categoryRepository.findById(id).orElseThrow( () ->
+                new CategoryNaoEncontradoException(
+                        new ExceptionResponse(ErrorCodes.CATEGORY_NAO_ENCONTRADO,
+                                ErrorConstants.CATEGORY_NAO_ENCONTRADO))  );
         _categoryRepository.delete(category);
     }
 
