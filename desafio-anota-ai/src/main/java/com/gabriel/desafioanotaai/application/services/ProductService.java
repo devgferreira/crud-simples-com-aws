@@ -8,6 +8,7 @@ import com.gabriel.desafioanotaai.domain.enums.ErrorCodes;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.model.product.Product;
 import com.gabriel.desafioanotaai.domain.repository.IProductRepository;
+import com.gabriel.desafioanotaai.infra.exceptions.CategoryNaoEncontradoException;
 import com.gabriel.desafioanotaai.infra.exceptions.ExceptionResponse;
 import com.gabriel.desafioanotaai.infra.exceptions.ProductNaoEncontradoException;
 import com.gabriel.desafioanotaai.infra.exceptions.constants.ErrorConstants;
@@ -32,7 +33,11 @@ public class ProductService implements IProductService {
     }
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
-        Category category = _categoryService.getById(productDTO.getCategoryId()).orElseThrow();
+        Category category = _categoryService.getById(productDTO.getCategoryId()).orElseThrow( () ->
+                new CategoryNaoEncontradoException(
+                        new ExceptionResponse(ErrorCodes.CATEGORY_NAO_ENCONTRADO,
+                                ErrorConstants.CATEGORY_NAO_ENCONTRADO)));
+
         Product product = new Product(productDTO);
         product.setCategory(category);
         return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
