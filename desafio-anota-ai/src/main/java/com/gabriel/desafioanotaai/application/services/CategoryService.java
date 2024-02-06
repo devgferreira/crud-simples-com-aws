@@ -2,8 +2,12 @@ package com.gabriel.desafioanotaai.application.services;
 
 import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
 import com.gabriel.desafioanotaai.application.interfaces.ICategoryService;
+import com.gabriel.desafioanotaai.domain.enums.ErrorCodes;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.repository.ICategoryRepository;
+import com.gabriel.desafioanotaai.infra.exceptions.CategoryNaoEncontradoException;
+import com.gabriel.desafioanotaai.infra.exceptions.ExceptionResponse;
+import com.gabriel.desafioanotaai.infra.exceptions.constants.ErrorConstants;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +50,11 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public CategoryDTO updateCategory(String id, CategoryDTO categoryDTO) {
-        Category category = _categoryRepository.findById(id).orElseThrow();
+        Category category = _categoryRepository.findById(id).orElseThrow( () ->
+                new CategoryNaoEncontradoException(
+                        new ExceptionResponse(ErrorCodes.CATEGORY_NAO_ENCONTRADO,
+                                ErrorConstants.CATEGORY_NAO_ENCONTRADO)));
+
         if (!categoryDTO.getTitle().isEmpty()){
             category.setTitle(categoryDTO.getTitle());
         }
