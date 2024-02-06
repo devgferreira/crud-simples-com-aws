@@ -4,9 +4,13 @@ import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
 import com.gabriel.desafioanotaai.application.dtos.ProductDTO;
 import com.gabriel.desafioanotaai.application.interfaces.ICategoryService;
 import com.gabriel.desafioanotaai.application.interfaces.IProductService;
+import com.gabriel.desafioanotaai.domain.enums.ErrorCodes;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.model.product.Product;
 import com.gabriel.desafioanotaai.domain.repository.IProductRepository;
+import com.gabriel.desafioanotaai.infra.exceptions.ExceptionResponse;
+import com.gabriel.desafioanotaai.infra.exceptions.ProductNaoEncontradoException;
+import com.gabriel.desafioanotaai.infra.exceptions.constants.ErrorConstants;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +40,11 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductDTO updateProduct(String id, ProductDTO productDTO) {
-        Product product = _productRepository.findById(id).orElseThrow();
+        Product product = _productRepository.findById(id).orElseThrow(
+                () -> new ProductNaoEncontradoException(
+                        new ExceptionResponse(ErrorCodes.PRODUCT_NAO_ENCONTRADO,
+                                ErrorConstants.PRODUCT_NAO_ENCONTRADO)));
+
         if(productDTO.getCategoryId() != null){
              _categoryService.getById(productDTO.getCategoryId()).ifPresent(product:: setCategory);
         }
