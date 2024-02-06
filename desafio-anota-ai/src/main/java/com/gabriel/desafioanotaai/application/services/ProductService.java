@@ -72,9 +72,10 @@ public class ProductService implements IProductService {
 
     @Override
     public void deleteProduct(String id) {
-        Product product = _productRepository.findById(id).orElseThrow();
-
-
+        Product product = _productRepository.findById(id).orElseThrow(
+                () -> new ProductNaoEncontradoException(
+                new ExceptionResponse(ErrorCodes.PRODUCT_NAO_ENCONTRADO,
+                        ErrorConstants.PRODUCT_NAO_ENCONTRADO)));
         _productRepository.delete(product);
 
     }
