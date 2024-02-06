@@ -14,11 +14,13 @@ public class ProductResponse {
     private String description;
     private String ownerId;
     private Integer price;
+    private String categoryId;
 
     public ProductResponse(ProductDTO productDTO) {
         this.title = productDTO.getTitle();
         this.description = productDTO.getDescription();
         this.ownerId = productDTO.getOwnerId();
         this.price = productDTO.getPrice();
+        this.categoryId = productDTO.getCategoryId();
     }
 }
