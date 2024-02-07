@@ -68,4 +68,22 @@ class CategoryServiceTest {
                 () -> _categoryService.getById(category.getId()));
     }
 
+    @Test
+    void updateCategoryTest(){
+        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
+
+        CategoryDTO categoryDTO = new CategoryDTO("123123123ASDASDAS", "Teste 2", "Teste Descrição 2", "123");
+
+        category.setTitle(categoryDTO.getTitle());
+        category.setDescription(categoryDTO.getDescription());
+
+        when(_categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
+        when(_categoryRepository.save(category)).thenReturn(category);
+        when(_modelMapper.map(category, CategoryDTO.class)).thenReturn(categoryDTO);
+        CategoryDTO result = _categoryService.updateCategory(categoryDTO.getId(),categoryDTO);
+        assertEquals(result, categoryDTO);
+
+
+    }
+
 }
