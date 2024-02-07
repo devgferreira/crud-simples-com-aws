@@ -85,5 +85,11 @@ class CategoryServiceTest {
 
 
     }
+    @Test
+    void updateCategoryTest_ComIdInvalido_RetornandoThrowsCategoryNaoEncontrado(){
+        CategoryDTO categoryDTO = new CategoryDTO("123123123ASDASDAS", "Teste 2", "Teste Descrição 2", "123");
+        assertThrows(CategoryNaoEncontradoException.class,
+                () -> _categoryService.updateCategory(null, categoryDTO));
+    }
 
 }
