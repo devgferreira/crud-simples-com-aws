@@ -4,6 +4,7 @@ import ch.qos.logback.core.net.server.Client;
 import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.repository.ICategoryRepository;
+import com.gabriel.desafioanotaai.infra.exceptions.CategoryNaoEncontradoException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -59,5 +60,12 @@ class CategoryServiceTest {
         assertEquals(result.get(), category);
     }
 
+    @Test
+    void getByIdTest_ComIdInvalido_RetornandoThrowsCategoryNaoEncontrado(){
+        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
+
+        assertThrows(CategoryNaoEncontradoException.class,
+                () -> _categoryService.getById(category.getId()));
+    }
 
 }
