@@ -31,7 +31,11 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Optional<Category> getById(String id) {
-        return _categoryRepository.findById(id);
+        return Optional.ofNullable(_categoryRepository.findById(id).orElseThrow(
+                () -> new CategoryNaoEncontradoException(
+                        new ExceptionResponse(ErrorCodes.CATEGORY_NAO_ENCONTRADO,
+                                ErrorConstants.CATEGORY_NAO_ENCONTRADO))
+        ));
     }
 
     @Override
