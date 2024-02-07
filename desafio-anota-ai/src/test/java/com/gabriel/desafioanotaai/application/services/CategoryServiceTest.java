@@ -1,5 +1,6 @@
 package com.gabriel.desafioanotaai.application.services;
 
+import ch.qos.logback.core.net.server.Client;
 import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.repository.ICategoryRepository;
@@ -45,5 +46,18 @@ class CategoryServiceTest {
         assertEquals(result, categoryDTO);
 
     }
+
+    @Test
+    void getByIdTest(){
+
+        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
+
+        when(_categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
+
+        Optional<Category> result = _categoryService.getById(category.getId());
+
+        assertEquals(result.get(), category);
+    }
+
 
 }
