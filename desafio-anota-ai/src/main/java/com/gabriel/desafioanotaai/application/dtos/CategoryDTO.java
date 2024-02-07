@@ -12,4 +12,11 @@ public class CategoryDTO {
     private String title;
     private String description;
     private String ownerId;
+
+    public CategoryDTO(String id, String title, String description, String ownerId) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.ownerId = ownerId;
+    }
 }
