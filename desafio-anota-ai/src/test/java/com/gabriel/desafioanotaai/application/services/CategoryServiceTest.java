@@ -12,7 +12,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -104,13 +108,30 @@ class CategoryServiceTest {
 
     }
 
-
     @Test
     void deleteCategoryTest_ComIdInvalido_RetornandoThrowsCategoryNaoEncontrado(){
         Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
 
         assertThrows(CategoryNaoEncontradoException.class,
                 () -> _categoryService.deleteCategory(null));
+    }
+
+    @Test
+    void getAllTest(){
+        List<Category> categories = Arrays.asList(new Category(), new Category());
+
+        List<CategoryDTO> categoryDTOs = categories.stream().map(category -> new CategoryDTO()).toList();
+
+        when(_categoryRepository.findAll()).thenReturn(categories);
+        for (int i = 0; i < categories.size(); i++) {
+            when(_modelMapper.map(categories.get(i), CategoryDTO.class)).thenReturn(categoryDTOs.get(i));
+        }
+
+        List<CategoryDTO> result = _categoryService.getAll();
+
+        assertEquals(result, categoryDTOs);
+
+
     }
 
 }
