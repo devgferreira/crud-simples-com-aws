@@ -94,7 +94,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    void deleteCategoryTeste(){
+    void deleteCategoryTest(){
         Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
 
         when(_categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
@@ -102,6 +102,15 @@ class CategoryServiceTest {
 
         verify(_categoryRepository).delete(category);
 
+    }
+
+
+    @Test
+    void deleteCategoryTest_ComIdInvalido_RetornandoThrowsCategoryNaoEncontrado(){
+        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
+
+        assertThrows(CategoryNaoEncontradoException.class,
+                () -> _categoryService.deleteCategory(null));
     }
 
 }
