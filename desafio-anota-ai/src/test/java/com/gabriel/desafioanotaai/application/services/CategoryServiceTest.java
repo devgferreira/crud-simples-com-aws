@@ -17,6 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,6 +91,17 @@ class CategoryServiceTest {
         CategoryDTO categoryDTO = new CategoryDTO("123123123ASDASDAS", "Teste 2", "Teste Descrição 2", "123");
         assertThrows(CategoryNaoEncontradoException.class,
                 () -> _categoryService.updateCategory(null, categoryDTO));
+    }
+
+    @Test
+    void deleteCategoryTeste(){
+        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
+
+        when(_categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
+        _categoryService.deleteCategory(category.getId());
+
+        verify(_categoryRepository).delete(category);
+
     }
 
 }
