@@ -38,7 +38,7 @@ public class ProductService implements IProductService {
                         new ExceptionResponse(ErrorCodes.CATEGORY_NAO_ENCONTRADO,
                                 ErrorConstants.CATEGORY_NAO_ENCONTRADO)));
 
-        Product product = new Product(productDTO);
+        Product product = _modelMapper.map(productDTO, Product.class);
         product.setCategory(category);
         return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
     }
