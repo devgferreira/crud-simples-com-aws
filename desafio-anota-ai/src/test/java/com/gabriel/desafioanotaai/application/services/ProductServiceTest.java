@@ -73,7 +73,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void updateProductTest_ComProductIdValido_RetornandoProduct(){
+    void updateProductTest_ComProductIdECategoryIdValido_RetornandoProduct(){
         Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
         ProductDTO productDTO = new ProductDTO("Teste123", "Teste", "Descrição", "123", 12345, category.getId());
         Product product = new Product(productDTO);
