@@ -2,6 +2,7 @@ package com.gabriel.desafioanotaai.application.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
 import com.gabriel.desafioanotaai.application.dtos.ProductDTO;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.model.product.Product;
@@ -105,6 +106,22 @@ class ProductServiceTest {
         assertThrows(ProductNaoEncontradoException.class,
                 () -> _productService.updateProduct(product.getId(), productDTO));
 
+    }
+
+    @Test
+    void getAllTest(){
+        List<Product> products = Arrays.asList(new Product(), new Product());
+
+        List<ProductDTO> productDTOS = products.stream().map(product -> new ProductDTO()).toList();
+
+        when(_productRepository.findAll()).thenReturn(products);
+        for (int i = 0; i < products.size(); i++) {
+            when(_modelMapper.map(products.get(i), ProductDTO.class)).thenReturn(productDTOS.get(i));
+        }
+
+        List<ProductDTO> result = _productService.getAll();
+
+        assertEquals(result, productDTOS);
     }
 
 
