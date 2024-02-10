@@ -124,7 +124,16 @@ class ProductServiceTest {
         assertEquals(result, productDTOS);
     }
 
+    @Test
+    void deleteProductTest_ComProductIdValida(){
+        Product product = new Product();
+        product.setId("123");
 
+        when(_productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        _productService.deleteProduct(product.getId());
+
+        verify(_productRepository).delete(product);
+    }
 
     @Test
     void deleteProductTest_ComProductIdInvalida_RetornandoThrowsProductNaoEncontrada(){
