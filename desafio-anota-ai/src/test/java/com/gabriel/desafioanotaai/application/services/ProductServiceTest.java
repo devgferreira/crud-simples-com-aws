@@ -126,4 +126,12 @@ class ProductServiceTest {
 
 
 
+    @Test
+    void deleteProductTest_ComProductIdInvalida_RetornandoThrowsProductNaoEncontrada(){
+        assertThrows(ProductNaoEncontradoException.class,
+                () -> _productService.deleteProduct(null));
+    }
+
+
+
 }

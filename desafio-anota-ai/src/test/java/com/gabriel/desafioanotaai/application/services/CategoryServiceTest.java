@@ -110,7 +110,6 @@ class CategoryServiceTest {
 
     @Test
     void deleteCategoryTest_ComIdInvalido_RetornandoThrowsCategoryNaoEncontrado(){
-        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
 
         assertThrows(CategoryNaoEncontradoException.class,
                 () -> _categoryService.deleteCategory(null));
