@@ -8,6 +8,7 @@ import com.gabriel.desafioanotaai.domain.model.product.Product;
 import com.gabriel.desafioanotaai.domain.repository.ICategoryRepository;
 import com.gabriel.desafioanotaai.domain.repository.IProductRepository;
 import com.gabriel.desafioanotaai.infra.exceptions.CategoryNaoEncontradoException;
+import com.gabriel.desafioanotaai.infra.exceptions.ProductNaoEncontradoException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -89,6 +90,20 @@ class ProductServiceTest {
 
         ProductDTO result = _productService.updateProduct(productDTO.getId(), productDTO);
         assertEquals(result, productDTO);
+
+    }
+
+    @Test
+    void updateProductTest_ComProductIdInvalido_RetornandoThrowsProductNaoEncontrada(){
+        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
+        ProductDTO productDTO = new ProductDTO("Teste123", "Teste", "Descrição", "123", 12345, category.getId());
+        Product product = new Product(productDTO);
+        product.setId(productDTO.getId());
+
+        when(_productRepository.findById(product.getId())).thenReturn(Optional.empty());
+
+        assertThrows(ProductNaoEncontradoException.class,
+                () -> _productService.updateProduct(product.getId(), productDTO));
 
     }
 
