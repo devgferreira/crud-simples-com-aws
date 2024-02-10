@@ -72,5 +72,26 @@ class ProductServiceTest {
                 () -> _productService.createProduct(productDTO));
     }
 
+    @Test
+    void updateProductTest_ComProductIdValido_RetornandoProduct(){
+        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
+        ProductDTO productDTO = new ProductDTO("Teste123", "Teste", "Descrição", "123", 12345, category.getId());
+        Product product = new Product(productDTO);
+        product.setId(productDTO.getId());
+        product.setTitle(productDTO.getTitle());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+
+        when(_modelMapper.map(product, ProductDTO.class)).thenReturn(productDTO);
+        when(_productRepository.findById(product.getId())).thenReturn(Optional.of(product));
+        when(_categoryService.getById(category.getId())).thenReturn(Optional.of(category));
+        when(_productRepository.save(product)).thenReturn(product);
+
+        ProductDTO result = _productService.updateProduct(productDTO.getId(), productDTO);
+        assertEquals(result, productDTO);
+
+    }
+
+
 
 }
