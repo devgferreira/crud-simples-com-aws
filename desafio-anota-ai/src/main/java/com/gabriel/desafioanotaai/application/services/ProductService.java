@@ -65,9 +65,11 @@ public class ProductService implements IProductService {
         return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
     }
     @Override
-    public List<Product> getAll() {
+    public List<ProductDTO> getAll() {
         List<Product> resultList = _productRepository.findAll();
-        return resultList;
+        return resultList.stream()
+                .map(product -> _modelMapper.map(product, ProductDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override

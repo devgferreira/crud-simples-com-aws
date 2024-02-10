@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface IProductService {
 
      ProductDTO createProduct(ProductDTO productDTO);
-     List<Product> getAll();
+     List<ProductDTO> getAll();
      ProductDTO updateProduct(String id, ProductDTO productDTO);
      void deleteProduct(String id);
 
