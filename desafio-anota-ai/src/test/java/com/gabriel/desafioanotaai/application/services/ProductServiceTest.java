@@ -3,6 +3,7 @@ package com.gabriel.desafioanotaai.application.services;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
+import com.gabriel.desafioanotaai.application.dtos.MessageDTO;
 import com.gabriel.desafioanotaai.application.dtos.ProductDTO;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.model.product.Product;
@@ -40,6 +41,8 @@ class ProductServiceTest {
     private IProductRepository _productRepository;
 
     @Mock
+    private AwsSnsService _awsSnsService;
+    @Mock
     private CategoryService _categoryService;
 
     @Mock
@@ -51,14 +54,13 @@ class ProductServiceTest {
         ProductDTO productDTO = new ProductDTO("Teste123", "Teste", "Descrição", "123", 12345, category.getId());
 
         Product product = new Product(productDTO);
-        product.setCategory(category);
-
+        product.setId(productDTO.getId());
 
         when(_modelMapper.map(productDTO, Product.class)).thenReturn(product);
-        when(_productRepository.save(product)).thenReturn(product);
         when(_categoryService.getById(category.getId())).thenReturn(Optional.of(category));
+        when(_productRepository.save(product)).thenReturn(product);
+        _awsSnsService.publish(new MessageDTO(product.getOwnerId()));
         when(_modelMapper.map(product, ProductDTO.class)).thenReturn(productDTO);
-
 
         ProductDTO result = _productService.createProduct(productDTO);
 
@@ -87,6 +89,7 @@ class ProductServiceTest {
         when(_modelMapper.map(product, ProductDTO.class)).thenReturn(productDTO);
         when(_productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         when(_categoryService.getById(category.getId())).thenReturn(Optional.of(category));
+        when(_modelMapper.map(product, ProductDTO.class)).thenReturn(productDTO);
         when(_productRepository.save(product)).thenReturn(product);
 
         ProductDTO result = _productService.updateProduct(productDTO.getId(), productDTO);
@@ -105,6 +108,22 @@ class ProductServiceTest {
 
         assertThrows(ProductNaoEncontradoException.class,
                 () -> _productService.updateProduct(product.getId(), productDTO));
+
+    }
+
+    @Test
+    void updateProductTest_ComCategoryIdInvalido_RetornandoThrowsCategoryNaoEncontrada(){
+        Category category = new Category("123123123ASDASDAS", "Teste", "Teste Descrição", "123");
+        ProductDTO productDTO = new ProductDTO("Teste123", "Teste", "Descrição", "123", 12345, category.getId());
+        Product product = new Product(productDTO);
+        product.setId(productDTO.getId());
+
+        when(_productRepository.findById(productDTO.getId())).thenReturn(Optional.of(product));
+
+        when(_categoryService.getById(category.getId())).thenReturn(Optional.empty());
+
+        assertThrows(CategoryNaoEncontradoException.class,
+                () -> _productService.updateProduct(productDTO.getId(), productDTO));
 
     }
 
