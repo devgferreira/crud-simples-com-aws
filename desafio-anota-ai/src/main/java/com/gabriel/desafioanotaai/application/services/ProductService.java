@@ -1,6 +1,6 @@
 package com.gabriel.desafioanotaai.application.services;
 
-import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
+import com.gabriel.desafioanotaai.application.dtos.MessageDTO;
 import com.gabriel.desafioanotaai.application.dtos.ProductDTO;
 import com.gabriel.desafioanotaai.application.interfaces.ICategoryService;
 import com.gabriel.desafioanotaai.application.interfaces.IProductService;
@@ -16,7 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,21 +25,27 @@ public class ProductService implements IProductService {
 
     private final ICategoryService _categoryService;
 
-    public ProductService(ModelMapper modelMapper, IProductRepository productRepository, ICategoryService categoryService) {
+    private final AwsSnsService _awsSnsService;
+
+    public ProductService(ModelMapper modelMapper, IProductRepository productRepository, ICategoryService categoryService, AwsSnsService awsSnsService) {
         _modelMapper = modelMapper;
         _productRepository = productRepository;
         _categoryService = categoryService;
+        _awsSnsService = awsSnsService;
     }
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
-        Category category = _categoryService.getById(productDTO.getCategoryId()).orElseThrow( () ->
+        _categoryService.getById(productDTO.getCategoryId()).orElseThrow( () ->
                 new CategoryNaoEncontradoException(
                         new ExceptionResponse(ErrorCodes.CATEGORY_NAO_ENCONTRADO,
                                 ErrorConstants.CATEGORY_NAO_ENCONTRADO)));
 
         Product product = _modelMapper.map(productDTO, Product.class);
-        product.setCategory(category);
-        return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
+
+        _productRepository.save(product);
+        _awsSnsService.publish(new MessageDTO(productDTO.getOwnerId()));
+
+        return _modelMapper.map(product, ProductDTO.class);
     }
 
     @Override
@@ -51,7 +56,11 @@ public class ProductService implements IProductService {
                                 ErrorConstants.PRODUCT_NAO_ENCONTRADO)));
 
         if(productDTO.getCategoryId() != null){
-             _categoryService.getById(productDTO.getCategoryId()).ifPresent(product:: setCategory);
+             _categoryService.getById(productDTO.getCategoryId()).orElseThrow( () ->
+                     new CategoryNaoEncontradoException(
+                             new ExceptionResponse(ErrorCodes.CATEGORY_NAO_ENCONTRADO,
+                                     ErrorConstants.CATEGORY_NAO_ENCONTRADO)));
+             product.setCategory(productDTO.getCategoryId());
         }
         if(!productDTO.getTitle().isEmpty()){
             product.setTitle(productDTO.getTitle());
@@ -62,7 +71,11 @@ public class ProductService implements IProductService {
         if(!(productDTO.getPrice() == null)){
             product.setPrice(productDTO.getPrice());
         }
-        return _modelMapper.map(_productRepository.save(product), ProductDTO.class);
+
+        _productRepository.save(product);
+        _awsSnsService.publish(new MessageDTO(productDTO.getOwnerId()));
+
+        return _modelMapper.map(product, ProductDTO.class);
     }
     @Override
     public List<ProductDTO> getAll() {
