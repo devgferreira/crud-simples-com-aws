@@ -19,12 +19,13 @@ public class Product {
     private String description;
     private String ownerId;
     private Integer price;
-    private Category category;
+    private String category;
 
     public Product(ProductDTO productDTO){
         title = productDTO.getTitle();
         description = productDTO.getDescription();
         ownerId = productDTO.getOwnerId();
         price = productDTO.getPrice();
+        category = productDTO.getCategoryId();
     }
 }
