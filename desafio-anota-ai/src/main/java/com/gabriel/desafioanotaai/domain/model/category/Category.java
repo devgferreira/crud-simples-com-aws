@@ -4,6 +4,7 @@ package com.gabriel.desafioanotaai.domain.model.category;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.json.JSONObject;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,5 +24,16 @@ public class Category {
         this.title = title;
         this.description = description;
         this.ownerId = ownerId;
+    }
+
+    @Override
+    public String toString(){
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("description", description);
+        json.put("ownerId", ownerId);
+        json.put("id", id);
+        json.put("type", "category");
+        return json.toString();
     }
 }
