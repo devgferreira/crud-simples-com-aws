@@ -20,14 +20,14 @@ public class Product {
     private String description;
     private String ownerId;
     private Integer price;
-    private String category;
+    private String categoryId;
 
     public Product(ProductDTO productDTO){
         title = productDTO.getTitle();
         description = productDTO.getDescription();
         ownerId = productDTO.getOwnerId();
         price = productDTO.getPrice();
-        category = productDTO.getCategoryId();
+        categoryId = productDTO.getCategoryId();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Product {
         json.put("description", description);
         json.put("ownerId", ownerId);
         json.put("price", price);
-        json.put("categoryId", category);
+        json.put("categoryId", categoryId);
         json.put("id", id);
         json.put("type", "product");
 
