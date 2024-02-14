@@ -38,6 +38,10 @@ Essas ferramentas e instruções irão ajudá-lo a configurar e executar as APIs
 
 ## Como usar a AWS
 
-Criar a fila de mensageria no SQS com o nome: catalog-update
-Criar um topic no SQS: catalog-emit, e vincular ele a fila de mensageria do SQS: catalog update
+Criar a fila de mensageria no SQS com o nome: catalog-update.
+
+Criar um topic no SNS: catalog-emit, e vincular ele a fila de mensageria do SQS: catalog update.
+
 Criar uma IAM com as permissões do SQS, SNS e S3 assim podendo fazer o acesso via IDE.
+
+Cria uma função Lambda com o nome: catalog-emit-consumer e adcionar um gatilho ao SQS.
