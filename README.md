@@ -44,4 +44,4 @@ Criar um topic no SNS: catalog-emit, e vincular ele a fila de mensageria do SQS:
 
 Criar uma IAM com as permissões do SQS, SNS e S3 assim podendo fazer o acesso via IDE.
 
-Cria uma função Lambda com o nome: catalog-emit-consumer e adcionar um gatilho ao SQS.
+Cria uma função Lambda com o nome: catalog-emit-consumer e adcionar um gatilho ao SQS e dar permissão pra S3 e SQS.
