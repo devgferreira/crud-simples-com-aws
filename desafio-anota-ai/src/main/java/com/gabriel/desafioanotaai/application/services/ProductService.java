@@ -42,6 +42,7 @@ public class ProductService implements IProductService {
 
         Product product = _modelMapper.map(productDTO, Product.class);
 
+
         _productRepository.save(product);
         _awsSnsService.publish(new MessageDTO(productDTO.getOwnerId()));
 
@@ -60,7 +61,7 @@ public class ProductService implements IProductService {
                      new CategoryNaoEncontradoException(
                              new ExceptionResponse(ErrorCodes.CATEGORY_NAO_ENCONTRADO,
                                      ErrorConstants.CATEGORY_NAO_ENCONTRADO)));
-             product.setCategory(productDTO.getCategoryId());
+             product.setCategoryId(productDTO.getCategoryId());
         }
         if(!productDTO.getTitle().isEmpty()){
             product.setTitle(productDTO.getTitle());
