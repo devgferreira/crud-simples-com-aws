@@ -20,6 +20,6 @@ public class AwsSnsService {
     }
 
     public void publish(MessageDTO message){
-        _amazonSNS.publish(_catalogTopic.getTopicArn(), message.toString());
+        _amazonSNS.publish(_catalogTopic.getTopicArn(), message.getMessage());
     }
 }
