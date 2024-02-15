@@ -2,6 +2,7 @@ package com.gabriel.desafioanotaai.application.services;
 
 import ch.qos.logback.core.net.server.Client;
 import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
+import com.gabriel.desafioanotaai.application.dtos.MessageDTO;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
 import com.gabriel.desafioanotaai.domain.repository.ICategoryRepository;
 import com.gabriel.desafioanotaai.infra.exceptions.CategoryNaoEncontradoException;
@@ -33,6 +34,8 @@ class CategoryServiceTest {
 
     @Mock
     private ICategoryRepository _categoryRepository;
+    @Mock
+    private AwsSnsService _awsSnsService;
 
     @Mock
     private ModelMapper _modelMapper;
@@ -45,6 +48,7 @@ class CategoryServiceTest {
 
         when(_modelMapper.map(categoryDTO, Category.class)).thenReturn(category);
         when(_categoryRepository.save(category)).thenReturn(category);
+        _awsSnsService.publish(new MessageDTO(category.toString()));
         when(_modelMapper.map(category, CategoryDTO.class)).thenReturn(categoryDTO);
 
         CategoryDTO result = _categoryService.createCategory(categoryDTO);
@@ -84,6 +88,7 @@ class CategoryServiceTest {
 
         when(_categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
         when(_categoryRepository.save(category)).thenReturn(category);
+        _awsSnsService.publish(new MessageDTO(category.toString()));
         when(_modelMapper.map(category, CategoryDTO.class)).thenReturn(categoryDTO);
         CategoryDTO result = _categoryService.updateCategory(categoryDTO.getId(),categoryDTO);
         assertEquals(result, categoryDTO);
