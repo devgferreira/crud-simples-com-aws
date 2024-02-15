@@ -44,7 +44,7 @@ public class ProductService implements IProductService {
 
 
         _productRepository.save(product);
-        _awsSnsService.publish(new MessageDTO(productDTO.toString()));
+        _awsSnsService.publish(new MessageDTO(product.toString()));
 
         return _modelMapper.map(product, ProductDTO.class);
     }
@@ -74,7 +74,7 @@ public class ProductService implements IProductService {
         }
 
         _productRepository.save(product);
-        _awsSnsService.publish(new MessageDTO(productDTO.toString()));
+        _awsSnsService.publish(new MessageDTO(product.toString()));
 
         return _modelMapper.map(product, ProductDTO.class);
     }
