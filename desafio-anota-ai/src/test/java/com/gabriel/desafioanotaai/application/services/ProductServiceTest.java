@@ -59,7 +59,7 @@ class ProductServiceTest {
         when(_modelMapper.map(productDTO, Product.class)).thenReturn(product);
         when(_categoryService.getById(category.getId())).thenReturn(Optional.of(category));
         when(_productRepository.save(product)).thenReturn(product);
-        _awsSnsService.publish(new MessageDTO(product.getOwnerId()));
+        _awsSnsService.publish(new MessageDTO(product.toString()));
         when(_modelMapper.map(product, ProductDTO.class)).thenReturn(productDTO);
 
         ProductDTO result = _productService.createProduct(productDTO);
@@ -89,6 +89,7 @@ class ProductServiceTest {
         when(_modelMapper.map(product, ProductDTO.class)).thenReturn(productDTO);
         when(_productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         when(_categoryService.getById(category.getId())).thenReturn(Optional.of(category));
+        _awsSnsService.publish(new MessageDTO(product.toString()));
         when(_modelMapper.map(product, ProductDTO.class)).thenReturn(productDTO);
         when(_productRepository.save(product)).thenReturn(product);
 
