@@ -1,6 +1,7 @@
 package com.gabriel.desafioanotaai.application.services;
 
 import com.gabriel.desafioanotaai.application.dtos.CategoryDTO;
+import com.gabriel.desafioanotaai.application.dtos.MessageDTO;
 import com.gabriel.desafioanotaai.application.interfaces.ICategoryService;
 import com.gabriel.desafioanotaai.domain.enums.ErrorCodes;
 import com.gabriel.desafioanotaai.domain.model.category.Category;
@@ -21,11 +22,14 @@ public class CategoryService implements ICategoryService {
 
     private final ICategoryRepository _categoryRepository;
     private final ModelMapper _modelMapper;
+    private final AwsSnsService _awsSnsService;
+
 
     @Autowired
-    public CategoryService(ICategoryRepository categoryRepository, ModelMapper modelMapper) {
+    public CategoryService(ICategoryRepository categoryRepository, ModelMapper modelMapper, AwsSnsService awsSnsService) {
         _categoryRepository = categoryRepository;
         _modelMapper = modelMapper;
+        _awsSnsService = awsSnsService;
     }
 
 
@@ -41,7 +45,9 @@ public class CategoryService implements ICategoryService {
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         Category category = _modelMapper.map(categoryDTO, Category.class);
-        return _modelMapper.map(_categoryRepository.save(category), CategoryDTO.class);
+        _categoryRepository.save(category);
+        _awsSnsService.publish(new MessageDTO(category.toString()));
+        return _modelMapper.map(category, CategoryDTO.class);
     }
 
     @Override
@@ -65,7 +71,9 @@ public class CategoryService implements ICategoryService {
         if (!categoryDTO.getDescription().isEmpty()){
             category.setDescription(categoryDTO.getDescription());
         }
-        return _modelMapper.map(_categoryRepository.save(category), CategoryDTO.class);
+        _categoryRepository.save(category);
+        _awsSnsService.publish(new MessageDTO(category.toString()));
+        return _modelMapper.map(category, CategoryDTO.class);
     }
 
     @Override
