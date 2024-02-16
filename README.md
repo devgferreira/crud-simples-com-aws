@@ -44,4 +44,8 @@ Criar um topic no SNS: catalog-emit, e vincular ele a fila de mensageria do SQS:
 
 Criar uma IAM com as permissões do SQS, SNS e S3 assim podendo fazer o acesso via IDE.
 
-Cria uma função Lambda com o nome: catalog-emit-consumer, adcionar um gatilho ao SQS e dar permissão pra S3 e SQS.
+Cria uma função Lambda com o nome: catalog-emit-consumer, adcionar um gatilho ao SQS, dar permissão pra S3 e SQS e criar o codigo para a criação de .json em um bucket no S3, para ter acesso ao codigo clique [aqui].
+
+Criar um bucket no S3 com o nome: crud-simples-catalog-marketplace.
+
+E por fim, configurar as credenciais no application.yml dentro da estrutura de projeto Java.  
