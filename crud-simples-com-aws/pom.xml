@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.gabriel</groupId>
-	<artifactId>desafio-anota-ai</artifactId>
+	<artifactId>crud-simples-com-aws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>desafio-anota-ai</name>
+	<name>crud-simples-com-aws</name>
 	<description>Projeto Teste</description>
 	<properties>
 		<java.version>17</java.version>
