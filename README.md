@@ -21,20 +21,18 @@ Lambda: Sistema orientado a evento da AWS.
 
 SNS: Sistema de mensageria da AWS.
 
-Docker: Sistema de contenerização.
-
 Java 17: Linguagem de programação.
+
+MongoDB: Sistema de banco de dados NoSql.
 
 Recomendo fortemente que você tenha essas ferramentas instaladas.
 
 ## Como iniciar as APIs
 Você precisa ter instalado as ferramentas mencionadas no tópico anterior. 
 
-Uso de uma IDE: Vs Code, Eclipse, Intellij, ou um console caso for usar o Docker.
+Uso de uma IDE: Vs Code, Eclipse e Intellij.
 
-Caso você vá testar localmente, verifique se o profile do application.yml está apontando para o LOCAL. Se for usar o Docker, aponte o profile para o DOCKER.]
-
-Essas ferramentas e instruções irão ajudá-lo a configurar e executar as APIs de forma eficiente.
+Essas ferramentas e instruções irão ajudá-lo a configurar e executar a API de forma eficiente.
 
 ## Como usar a AWS
 
@@ -49,3 +47,33 @@ Cria uma função Lambda com o nome: catalog-emit-consumer, dar permissão para 
 Criar um bucket no S3 com o nome: crud-simples-catalog-marketplace.
 
 E por fim, configurar as credenciais no application.yml dentro da estrutura de projeto Java.  
+
+
+# Estrutura do Projeto
+## Apresentation
+Controlador: Controladores de API, responsáveis por receber solicitações e enviar respostas.
+
+## Application
+DTOs: Objetos de Transferência de Dados usados para passar dados entre camadas.
+
+Interfaces: Contratos para os serviços.
+
+Services: Contém lógica de negócios de alto nível e chama métodos do repositório.
+
+## Domain
+Entity/model: Entidades de domínio.
+
+Repository: Contratos para os Repositórios.
+
+Enums: Enumerações usadas em entidades e/ou regras de negócio.
+
+## Infra
+Config: Configuração de dependência do projeto.
+  - Aws: Configuração do bean da AWS.
+  - ModelMapper: Configuração do bean do ModelMapper.
+  - Mongo: Configuração do bean do MongoDB.
+
+Exceptions: Configuração de exceção e seu manipulador.
+  - Constants: Regras onde os valores não podem ser mutáveis.
+  - Handler: Onde manipulamos as exceptions.
+
