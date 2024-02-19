@@ -83,13 +83,13 @@ A API ‘crud-simples-com-aws’ é um CRUD básico que processa requisições p
 
 E consiste com dois controller: CategoryController e ProductController.
 
-CategoryController: O CategoryControlelr tem quatro end-points.
+__CategoryController:__ O CategoryControlelr tem quatro end-points.
   - createCategory: Esse end-point é responsável por fazer a criação de uma nova Category.
   - getAll: Esse end-point é responsável por trazer todas as Category.
   - updateCategory: Esse end-point é responsável por atualizar uma Category existente.
   - deleteCategory: Esse end-point é reponsável por deletar uma Category existente.
 
-ProductController: O ProductController tem quatro end-points.
+__ProductController:__ O ProductController tem quatro end-points.
  - createProduct: Esse end-point é responsável por fazer a criação de um nova Product.
  - getAll: Esse end-point é responsável por trazer todas os Product.
  - updateProduct: Esse end-point é responsável por atualizar um Product existente.
