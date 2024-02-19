@@ -51,29 +51,46 @@ E por fim, configurar as credenciais no application.yml dentro da estrutura de p
 
 # Estrutura do Projeto
 ## Apresentation
-Controlador: Controladores de API, responsáveis por receber solicitações e enviar respostas.
+- Controller: Controladores da API, responsáveis por receber solicitações e enviar respostas.
 
 ## Application
-DTOs: Objetos de Transferência de Dados usados para passar dados entre camadas.
+- DTOs: Objetos de Transferência de Dados usados para passar dados entre camadas.
 
-Interfaces: Contratos para os serviços.
+- Interfaces: Contratos para os serviços.
 
-Services: Contém lógica de negócios de alto nível e chama métodos do repositório.
+- Services: Contém lógica de negócios de alto nível e chama métodos do repositório.
 
 ## Domain
-Entity/model: Entidades de domínio.
+- Entity/model: Entidades de domínio.
 
-Repository: Contratos para os Repositórios.
+- Repository: Contratos para os Repositórios.
 
-Enums: Enumerações usadas em entidades e/ou regras de negócio.
+- Enums: Enumerações usadas em entidades e/ou regras de negócio.
 
 ## Infra
-Config: Configuração de dependência do projeto.
+- Config: Configuração de dependência do projeto.
   - Aws: Configuração do bean da AWS.
   - ModelMapper: Configuração do bean do ModelMapper.
   - Mongo: Configuração do bean do MongoDB.
 
-Exceptions: Configuração de exceção e seu manipulador.
+- Exceptions: Configuração de exceção e seu manipulador.
   - Constants: Regras onde os valores não podem ser mutáveis.
   - Handler: Onde manipulamos as exceptions.
 
+# API
+## Crud-Simples-Com-Aws
+A API ‘crud-simples-com-aws’ é um CRUD básico que processa requisições para ‘Category’ e ‘Product’. O diferencial desta API reside no uso de várias tecnologias da __AWS__. Utiliza-se o __SNS__ para enviar mensagens em formato JSON, o __SQS__ para gerenciar a fila de mensagens, o __Lambda__ para processar as mensagens e o __S3__ para armazenar as requisições de ‘Product’ e ‘Category’. Este conjunto de tecnologias otimiza a eficiência e a escalabilidade do sistema. 
+
+E consiste com dois controller: CategoryController e ProductController.
+
+CategoryController: O CategoryControlelr tem quatro end-points.
+  - createCategory: Esse end-point é responsável por fazer a criação de uma nova Category.
+  - getAll: Esse end-point é responsável por trazer todas as Category.
+  - updateCategory: Esse end-point é responsável por atualizar uma Category existente.
+  - deleteCategory: Esse end-point é reponsável por deletar uma Category existente.
+
+ProductController: O ProductController tem quatro end-points.
+ - createProduct: Esse end-point é responsável por fazer a criação de um nova Product.
+ - getAll: Esse end-point é responsável por trazer todas os Product.
+ - updateProduct: Esse end-point é responsável por atualizar um Product existente.
+ - deleteProduct: Esse end-point é reponsável por deletar um Product existente.
