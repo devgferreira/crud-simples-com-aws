@@ -5,9 +5,9 @@
 ## Concepção da API
 A concepção da API adotou os preceitos fundamentais da Clean Architecture, aliados à filosofia do clean code.
 
-O projeto é envolta de um crud simples e é baseado em um estrutura monolítica. De forma simplificada, a estrutura do projeto é contruiída em torno das controller CategoryController e ProductController, onde um Product precisa de uma Category para existir.
+O projeto é envolta de um crud simples com __AWS__ e é baseado em um estrutura monolítica. De forma simplificada, a estrutura do projeto é construida em torno das controller CategoryController e ProductController, onde um Product precisa de uma Category para existir.
 
-Tal abordagem possobilita a criação de um Product.
+Tal abordagem possobilita a criação de uma Category e de um Product, onde a API ira processar a requisição e mandar uma mensagem via SNS para a AWS que será processada em uma função lambda, e caso não aja erro vai ser salva em um arquivo .json dentro de um bucket no S3.
 
 ## Ferramentas usadas
 
