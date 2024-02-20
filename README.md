@@ -94,3 +94,10 @@ __ProductController:__ O ProductController tem quatro end-points.
  - getAll: Esse end-point é responsável por trazer todas os Product.
  - updateProduct: Esse end-point é responsável por atualizar um Product existente.
  - deleteProduct: Esse end-point é reponsável por deletar um Product existente.
+
+## Postman
+
+Arquivo para a documentação do postman: [link](https://github.com/devgferreira/crud-simples-com-aws/blob/main/Crud%20Simples%20com%20AWS.postman_collection.json)
+
+---
+
