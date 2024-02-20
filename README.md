@@ -42,7 +42,7 @@ Criar um topic no SNS: catalog-emit, e vincular ele a fila de mensageria do SQS:
 
 Criar uma IAM com as permissões do SQS, SNS e S3 assim podendo fazer o acesso via IDE.
 
-Cria uma função Lambda com o nome: catalog-emit-consumer, dar permissão para o S3 e SQS, adicionar um gatilho apontando para o SQS e criar o script para a criação de .json em um bucket no S3, para ter acesso ao script clique [aqui].
+Cria uma função Lambda com o nome: catalog-emit-consumer, dar permissão para o S3 e SQS, adicionar um gatilho apontando para o SQS e criar o script para a criação de .json em um bucket no S3, para ter acesso ao script clique [aqui](https://github.com/devgferreira/crud-simples-com-aws/blob/main/script%20lambda.txt).
 
 Criar um bucket no S3 com o nome: crud-simples-catalog-marketplace.
 
@@ -97,7 +97,7 @@ __ProductController:__ O ProductController tem quatro end-points.
 
 ## Postman
 
-Arquivo para a documentação do postman: [link](https://github.com/devgferreira/crud-simples-com-aws/blob/main/Crud%20Simples%20com%20AWS.postman_collection.json)
+Arquivo para a documentação do postman: [arquivo](https://github.com/devgferreira/crud-simples-com-aws/blob/main/Crud%20Simples%20com%20AWS.postman_collection.json)
 
 ---
 
